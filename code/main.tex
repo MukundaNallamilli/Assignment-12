@@ -1,0 +1,140 @@
+\documentclass{beamer}
+
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{setspace}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{color}
+\usepackage{array}
+\usepackage{calc} 
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{float}
+
+\usetheme{CambridgeUS}
+\useoutertheme{infolines}
+%numbering
+\setbeamercolor{background canvas}{bg=white}
+\setbeamersize{text margin left=1cm,text margin right=1cm}
+
+\title[AI1110  Assignment-12]{ASSIGNMENT-12}
+\subtitle{AI1110}
+\author[]{MUKUNDA REDDY \\ AI21BTECH11021}
+\date
+
+\begin{document}
+  \begin{frame}
+      \titlepage
+  \end{frame}
+  
+  \begin{frame}{Outline}
+      \tableofcontents
+  \end{frame}
+  
+  \section{Question}
+  \begin{frame}{Exercise 15-15}
+   Deteimine the mean time to absorption for the random walk
+   model  with two absorbing barriers .Let the number of
+   states in a random walk be finite $(e_0, e_1,... e_N)$
+   Consider the case 
+   \begin{center}
+   P =
+   \begin{pmatrix}
+    1 &0& 0& 0& .& .& .& 0\\
+    q &0& p& 0& 0& .& .& 0 \\
+      0& q& 0& P& 0& .& .& 0 \\
+       .&.&.&.&.&.&.&.   \\
+       .&.&.&.&.&.&.&. \\
+       0& 0& .& .& .& q& 0& P  \\
+       0& 0& .& .& .& 0& 0& 1&
+   \end{pmatrix}
+   \end{center}
+    Find mean time to absorption for player A?
+  \end{frame}
+  
+  \section{Solution}
+  \begin{frame}{Solution}
+      The mean time to absorption satisﬁes
+      \begin{align*}
+          m_i &= 1 + \sum_{k \in T} p_{ik}m_k \\
+             &= 1 + p_{i,i+1}m_{i+1} + p_{i,i-1}m_{i-1} \\
+             &= 1 + pm_{i+1} + qm_{i-1}
+      \end{align*}
+      This gives 
+      $$ p(m_{k+1} - m_{k}) = q(m_k - m_{k-1}) - 1$$
+      Let
+      $$ M_{k+1} = m_{k+1} - m_{k} $$
+  \end{frame}
+  
+  \begin{frame}{Solution}
+      so that the above iteration gives
+      \begin{align*}
+          M_{k+1} &= \frac{q}{p}M_{k} - \frac{1}{p} \\
+                 &= \left(\frac{q}{p}\right)^{k}M_1 - \frac{1}{p}\left[ 
+                 1 + \left(\frac{q}{p}\right) + \left(\frac{q}{p}\right)^2 + ... +
+                 \left(\frac{q}{p}\right)^{k-1} \right] \\
+            &=
+            \begin{cases}
+                 {\left(\frac{q}{p}\right)}^{k}M_1 - \frac{1}{p-q} \left\{ 1-{\left(\frac{q}{p}\right)}^{k} \right\} ,& p \neq q \\
+                 M1 - \frac{k}{p}, & p=q 
+            \end{cases} \\
+      \end{align*}
+  \end{frame}
+  
+  \begin{frame}{Solution}
+      This gives
+      \begin{align*}
+          m_i &= \sum_{k=0} ^{i-1} M_{k+1} \\
+            &=
+            \begin{cases}
+               \left(M_1 + \frac{1}{p-q}\right) \sum_{k=0} ^{i-1} {\left(\frac{q}{p}\right)}^k - \frac{i}{p-q}, & p \neq q \\
+               iM_1 - \frac{i(i-1)}{2p}, & p=q
+            \end{cases} \\
+            &=
+            \begin{cases}
+                \left(M_1 + \frac{1}{p-q}\right)\frac{1-(q/p)^{i}}{1-(q/p)} - \frac{i}{p-q}, & p \neq q \\
+                iM_1 - \frac{i(i-1)}{2p}, & p=q 
+            \end{cases}
+      \end{align*}
+  \end{frame}
+  
+  \begin{frame}{Solution}
+      which we have used $m_o =0$.Similarly $m_{a+b} = 0$ gives
+      $$M_1 + \frac{1}{p-q} = \frac{a+b}{p-q}\frac{1- q/p}{1 - (q/p)^{a+b}}.$$
+      Thus 
+      $m_i =$
+      \begin{cases}
+          \frac{a+b}{p-q}\frac{1-(q/p)^i}{1-(q/p)^{a+b}}- \frac{i}{p-q}, & p\neq q \\
+          i(a+b-i), & p=q 
+      \end{cases}
+  \end{frame}
+  
+  \begin{frame}{Solution}
+      Which gives for $i=a$
+      \begin{align*}
+          m_a &=
+          \begin{cases}
+              \frac{a+b}{p-q} \frac{1-(q/p)^{a}}{1-(q/p)^{a+b}} - \frac{a}{p-q}, & p \neq q \\
+              ab, & p=q
+          \end{cases} \\
+          &= 
+          \begin{cases}
+                \frac{b}{2p-1} - \frac{a+b}{2p-1}\frac{1-(p/q)^{b}}{1-(p/q)^{a+b}}, & p \neq q \\
+                ab, & p=q
+          \end{cases} \\
+      \end{align*}
+  \end{frame}
+  
+  \begin{frame}{Solution}
+      by writing we get the mean time as
+      \begin{align*}
+          \frac{1-(q/p)^a}{1 - (q/p)^{a+b}} &= 1 - \frac{(q/p)^{a} - (q/p)^{a+b}}{1 - (q/p)^{a+b}} \\
+          &= 1 - \frac{1-(p/q)^b}{1 - (p/q)^{a+b}}
+      \end{align*}
+  \end{frame}
+  
+\end{document}
